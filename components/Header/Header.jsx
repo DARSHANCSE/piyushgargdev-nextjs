@@ -21,27 +21,26 @@ import {
   AiFillEdit,
 } from "react-icons/ai";
 
-
 const NAV__LINK = [
   {
     path: "/",
     display: "Home",
-    openInNewPage:false,
+    openInNewPage: false,
   },
   {
     path: "/#courses",
     display: "Courses",
-    openInNewPage:false,
+    openInNewPage: false,
   },
   {
     path: "/gears",
     display: "My Gears",
-    openInNewPage:false,
+    openInNewPage: false,
   },
   {
     path: "https://blog.piyushgarg.dev",
     display: "Blogs",
-    openInNewPage:true,
+    openInNewPage: true,
   },
 ];
 
@@ -56,7 +55,7 @@ const icons = [
 const Header = () => {
   const [crossMenu, setCrossMenu] = useState(false);
   const headerRef = useRef(null);
-
+  const [selectedmenu, setselectedmenu] = useState("Home");
   const menuRef = useRef(null);
 
   const { data } = useSession();
@@ -111,14 +110,29 @@ const Header = () => {
               {NAV__LINK.map((item, index) => (
                 <div
                   key={index}
+                  onClick={() => setselectedmenu(item.display)}
                   className={`${classes.mobile__menuDiv} cursor-pointer`}
                 >
-                  <Link aria-label={item.display} href={item.path} target={`${item.openInNewPage?'_blank':'_self'}`}>
+                  <Link
+                    aria-label={item.display}
+                    href={item.path}
+                    target={`${item.openInNewPage ? "_blank" : "_self"}`}
+                  >
                     <p className={`${classes.mobile__menu}`}>{icons[index]}</p>
                   </Link>
 
-                  <Link aria-label={item.display} href={item.path} target={`${item.openInNewPage?'_blank':'_self'}`}>
-                    <span className=" text-[#808dad] hover:text-green-400">
+                  <Link
+                    aria-label={item.display}
+                    href={item.path}
+                    target={`${item.openInNewPage ? "_blank" : "_self"}`}
+                  >
+                    <span
+                      className={`${
+                        selectedmenu === item.display
+                          ? "text-red-500"
+                          : "text-[#808dad]"
+                      } hover:text-green-400`}
+                    >
                       {item.display}
                     </span>
                   </Link>
@@ -192,7 +206,7 @@ const Header = () => {
                     className={`cursor-pointer text-[#ffffff] hover:text-[--site-theme-color] transform ease-in-out hover:-translate-y+1 hover:scale-150`}
                     rel="noreferrer"
                   >
-                    <NewTwitterLogo/>
+                    <NewTwitterLogo />
                   </Link>
 
                   <Link
@@ -211,7 +225,9 @@ const Header = () => {
           </div>
 
           <span
-            onClick={() => setCrossMenu(!crossMenu)}
+            onClick={() => {
+              setCrossMenu(!crossMenu);
+            }}
             className={`${classes.mobile__menu}`}
           >
             <i className="ri-menu-line" onClick={toggleMenu}></i>
